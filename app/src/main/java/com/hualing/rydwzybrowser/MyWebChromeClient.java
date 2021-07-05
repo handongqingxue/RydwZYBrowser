@@ -15,6 +15,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.EditText;
 
+//https://blog.csdn.net/chexitianxia/article/details/47834989
 public class MyWebChromeClient extends WebChromeClient {
     @Override
     public void onCloseWindow(WebView window) {

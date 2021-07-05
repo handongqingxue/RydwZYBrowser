@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             // 设置打开的页面地址
-            webView.loadUrl("http://192.168.2.166:8080/PositionPhZY/phone/goPage?page=login");
+            //webView.loadUrl("http://192.168.2.166:8080/PositionPhZY/phone/goPage?page=index");
+            webView.loadUrl("http://www.qrcodesy.com:8080/PositionPhZY/phone/goPage?page=login");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -40,10 +41,5 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        //访问网页
-        //webView.loadUrl("http://192.168.2.166:8080/PositionPhZY/phone/goPage?page=login");
-        //webView.loadUrl("http://www.qrcodesy.com:8080/PositionPhZY/phone/goPage?page=login");
-
     }
 }
