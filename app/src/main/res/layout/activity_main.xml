@@ -32,7 +32,6 @@
             android:gravity="center"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:text="111"
             android:textColor="#fff"
             android:id="@+id/title_userId_tv"/>
 

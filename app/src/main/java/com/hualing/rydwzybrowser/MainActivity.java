@@ -1,8 +1,12 @@
 package com.hualing.rydwzybrowser;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -11,11 +15,10 @@ import android.widget.Toast;
 
 //https://blog.csdn.net/weixin_40438421/article/details/85700109
 //net：：ERR_CLEARTEXT_NOT_PERMITTED解决方案：https://blog.csdn.net/weixin_44618862/article/details/99611917
-//https://blog.csdn.net/xunfan/article/details/44587861?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-1.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-1.nonecase
 public class MainActivity extends AppCompatActivity {
 
-    private static final String WEB_URL = "http://192.168.2.166:8080/PositionPhZY/phone/goPage?page=index";
-    //private static final String WEB_URL = "http://www.qrcodesy.com:8080/PositionPhZY/phone/goPage?page=index";
+    //private static final String WEB_URL = "http://192.168.2.166:8080/PositionPhZY/phone/goPage?page=index";
+    private static final String WEB_URL = "http://www.qrcodesy.com:8080/PositionPhZY/phone/goPage?page=index";
     private WebView currentWV;
     private TextView titleUserIdTV;
 
@@ -42,6 +45,24 @@ public class MainActivity extends AppCompatActivity {
         //获得控件
         WebView webView = (WebView) findViewById(R.id.browser_wv);
         titleUserIdTV= (TextView)findViewById(R.id.title_userId_tv);
+        titleUserIdTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View luiView = LayoutInflater.from(MainActivity.this).inflate(R.layout.login_user_info,null);
+                TextView userIdTV = luiView.findViewById(R.id.ad_userId_tv);
+                userIdTV.setText(titleUserIdTV.getText().toString());
+                new AlertDialog.Builder(MainActivity.this).setView(luiView)
+                        .setNegativeButton("确定", null)
+                        .setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                WebView webView = currentWV;
+                                webView.loadUrl("javascript:document.getElementById('exit_but').click()");
+                            }
+                        })
+                        .show();
+            }
+        });
 
         // 设置WebView属性，能够执行Javascript脚本,但是好像不起作用
         webView.getSettings().setJavaScriptEnabled(true);
