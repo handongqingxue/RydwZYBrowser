@@ -49,15 +49,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 View luiView = LayoutInflater.from(MainActivity.this).inflate(R.layout.login_user_info,null);
-                TextView userIdTV = luiView.findViewById(R.id.ad_userId_tv);
+                final TextView userIdTV = luiView.findViewById(R.id.ad_userId_tv);
                 userIdTV.setText(titleUserIdTV.getText().toString());
                 new AlertDialog.Builder(MainActivity.this).setView(luiView)
-                        .setNegativeButton("确定", null)
+                        .setNegativeButton("确定", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                userIdTV.setText("");
+                            }
+                        })
                         .setPositiveButton("退出", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 WebView webView = currentWV;
                                 webView.loadUrl("javascript:document.getElementById('exit_but').click()");
+                                userIdTV.setText("");
                             }
                         })
                         .show();

@@ -48,4 +48,14 @@ public class JavaScriptInterface {
 
         //Toast.makeText(mContext, webMessage, Toast.LENGTH_SHORT).show();
     }
+
+    @JavascriptInterface
+    public void removeUserId(){
+        myHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mContext.setTitleUserIdTVText("");
+            }
+        });
+    }
 }
