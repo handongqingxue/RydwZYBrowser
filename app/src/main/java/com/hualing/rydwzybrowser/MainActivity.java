@@ -9,7 +9,11 @@ import android.webkit.WebViewClient;
 
 //https://blog.csdn.net/weixin_40438421/article/details/85700109
 //net：：ERR_CLEARTEXT_NOT_PERMITTED解决方案：https://blog.csdn.net/weixin_44618862/article/details/99611917
+//https://blog.csdn.net/xunfan/article/details/44587861?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-1.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-1.nonecase
 public class MainActivity extends AppCompatActivity {
+
+    //private static final String WEB_URL = "http://192.168.2.166:8080/PositionPhZY/phone/goPage?page=index";
+    private static final String WEB_URL = "http://www.qrcodesy.com:8080/PositionPhZY/phone/goPage?page=index";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             // 设置打开的页面地址
-            //webView.loadUrl("http://192.168.2.166:8080/PositionPhZY/phone/goPage?page=index");
-            webView.loadUrl("http://www.qrcodesy.com:8080/PositionPhZY/phone/goPage?page=login");
+            webView.loadUrl(WEB_URL);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -39,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
                 // 把初始页面Url加入历史记录
 
                 return true;
+            }
+
+            public void onPageFinished(WebView view, String url) {
+                // TODO Auto-generated method stub
+                super.onPageFinished(view, url);
+                view.loadUrl("javascript:document.getElementById('exit_but').click()");
             }
         });
     }
