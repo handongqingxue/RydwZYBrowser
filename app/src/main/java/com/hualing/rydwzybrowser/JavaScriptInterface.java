@@ -26,7 +26,7 @@ public class JavaScriptInterface {
                 //Log.e("getPageName===",""+text);
                 //mContext.setTitleUserIdTVText(text);
                 if(!"login".equals(text))
-                    mContext.runAndroidFunction(mContext.getCurrentWV(),"showUserId");
+                    mContext.runAndroidFunction(mContext.getCurrentWV(),"showUserInfo");
             }
         });
 
@@ -34,15 +34,18 @@ public class JavaScriptInterface {
     }
 
     @JavascriptInterface
-    public void showUserId(String webText){
-        final String text = webText;
+    public void showUserInfo(String webText){
+        String[] userInfoArr = webText.split(",");
+        final String userId = userInfoArr[0];
+        final int role = Integer.valueOf(userInfoArr[1]);
         myHandler.post(new Runnable() {
             @Override
             public void run() {
                 // This gets executed on the UI thread so it can safely modify Views
                 //myTextView.setText(msgeToast);
-                //Log.e("showUserId===",""+text);
-                mContext.setTitleUserIdTVText(text);
+                //Log.e("showUserInfo===",""+text);
+                mContext.setTitleUserIdTVText(userId);
+                mContext.setRole(role);
             }
         });
 

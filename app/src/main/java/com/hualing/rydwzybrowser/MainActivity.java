@@ -1,17 +1,18 @@
 package com.hualing.rydwzybrowser;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 //https://blog.csdn.net/weixin_40438421/article/details/85700109
 //net：：ERR_CLEARTEXT_NOT_PERMITTED解决方案：https://blog.csdn.net/weixin_44618862/article/details/99611917
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String WEB_URL = "http://www.qrcodesy.com:8080/PositionPhZY/phone/goPage?page=index";
     private WebView currentWV;
     private TextView titleUserIdTV;
+    private int role;
 
     public WebView getCurrentWV() {
         return currentWV;
@@ -31,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void setTitleUserIdTVText(String text){
         titleUserIdTV.setText(text);
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public void runAndroidFunction(WebView webView,String action){
@@ -51,11 +61,30 @@ public class MainActivity extends AppCompatActivity {
                 View luiView = LayoutInflater.from(MainActivity.this).inflate(R.layout.login_user_info,null);
                 final TextView userIdTV = luiView.findViewById(R.id.ad_userId_tv);
                 userIdTV.setText(titleUserIdTV.getText().toString());
-                new AlertDialog.Builder(MainActivity.this).setView(luiView)
+                final TextView roleTV = luiView.findViewById(R.id.ad_role_tv);
+                String roleStr=null;
+                switch (role){
+                    case 1:
+                        roleStr="管理员";
+                        break;
+                    case 2:
+                        roleStr="普通用户";
+                        break;
+                    case 3:
+                        roleStr="来宾用户";
+                        break;
+                    case 4:
+                        roleStr="手机用户";
+                        break;
+                }
+                roleTV.setText(roleStr);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                dialog.setView(luiView)
                         .setNegativeButton("确定", new DialogInterface.OnClickListener(){
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 userIdTV.setText("");
+                                roleTV.setText("");
                             }
                         })
                         .setPositiveButton("退出", new DialogInterface.OnClickListener() {
@@ -64,9 +93,20 @@ public class MainActivity extends AppCompatActivity {
                                 WebView webView = currentWV;
                                 webView.loadUrl("javascript:document.getElementById('exit_but').click()");
                                 userIdTV.setText("");
+                                roleTV.setText("");
                             }
-                        })
-                        .show();
+                        });
+                AlertDialog alertDialog = dialog.show();
+                //设置按钮样式：https://blog.csdn.net/xiayiye5/article/details/83080623
+                Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);//确定
+                LinearLayout.LayoutParams negativeButtonParams = (LinearLayout.LayoutParams)negativeButton.getLayoutParams();
+                negativeButtonParams.setMargins(0,0,120,0);
+                //negativeButton.setBackgroundColor(Color.rgb(255,0,0));
+
+                Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);//退出
+                LinearLayout.LayoutParams positiveButtonParams = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
+                positiveButtonParams.setMargins(50,0,60,0);
+                //positiveButton.setBackgroundColor(Color.rgb(255,0,0));
             }
         });
 

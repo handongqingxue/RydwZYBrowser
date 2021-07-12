@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="#1777FF"
         android:id="@+id/title_layout">
 
@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="辰麒人员定位安全管理平台"
-            android:textColor="#fff"/>
+            android:textColor="#fff"
+            android:textSize="20sp"/>
         </LinearLayout>
 
         <TextView
@@ -33,6 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:textColor="#fff"
+            android:textSize="18sp"
             android:id="@+id/title_userId_tv"/>
 
     </RelativeLayout>
